@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /*body {*/
+        /*    height: calc(100% - 20px);*/
+        /*    width: calc(100% - 20px);*/
+        /*    margin: 0;*/
+        /*    padding: 10px;*/
+        /*    display: flex;*/
+        /*    background: #f2f2f2;*/
+        /*    color: rgba(0,0,0,.87);*/
+        /*    font-family: 'Roboto', sans-serif;*/
+        /*    text-align: center;*/
+        /*}*/
+        .box {
+            position: relative;
+            background: white;
+            height: 64px;
+            transition: all .15s ease-in-out;
+        }
+        .box::before {
+            content: '';
+            position: absolute;
+            display: block;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            pointer-events: none;
+            box-shadow: 0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+        }
+        header.box {
+            text-align: center;
+            background: #00BCD4;
+            z-index: 100;
+            cursor: initial;
+            box-shadow: 0 -1px 0 #e5e5e5,0 0 2px -2px rgba(0,0,0,.12),0 2px 4px -4px rgba(0,0,0,.24);
+        }
+        header .box-title {
+            text-align: center;
+            margin: 0;
+            font-weight: normal;
+            font-size: 16pt;
+            color: white;
+            cursor: initial;
+            line-height: 1;
+        }
+        .box-title {
+            text-align: center;
+            width: calc(100% - 40px);
+            height: 64px;
+            line-height: 64px;
+            padding: 0 20px;
+            display: inline-block;
+            cursor: pointer;
+            -webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;
+        }
+        .box-link{
+            box-shadow: 0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+            text-align: center;
+            padding: 10px;
+        }
+        .accordion {
+            margin: auto;
+            width: 400px;
+        }
+        .box-description{
+            position: relative;
+            background: #e7e7e7;
+            transition: all .15s ease-in-out;
+            box-shadow: 0 -1px 0 #6f6f6f,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+            padding: 3%;
+            text-align: right;
+
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script>
+        $( document ).ready(function() {
+            var data = {
+                "o1": [{
+                    "name": "ویندوز سرور ( به صورت ریموت دسکتاپ)",
+                    "qoa": "سرویس مورد نظر را انتخاب کنید",
+                    "id": "t1",
+                }, {
+                    "name": "VPN سرور",
+                    "id": "t2"
+                }],
+                "t1": [{
+                    "name": "هلند",
+                    "qoa": "کشور مورد نظر را انتخاب کنید",
+                    "id": "s1",
+                }, {
+                    "name": "فرانسه و انگلیس",
+                    "id": "s2"
+                }, {
+                    "name": "آلمان",
+                    "id": "s3"
+                }],
+                "t2": [{
+                    "name": "فرانسه و انگلیس",
+                    "qoa": "کشور مورد نظر را انتخاب کنید",
+                    "id": "s4"
+                }, {
+                    "name": "آلمان",
+                    "id": "s5"
+                }, {
+                    "name": "هلند",
+                    "id": "s6"
+                }, {
+                    "name": "دیگر کشورها",
+                    "id": "s7"
+                }],
+                "s1": [{
+                    "name": "رم 1G با ویندوز 2008",
+                    "qoa": "پلن های پیشنهادی هلند",
+                    "id": "0",
+                    "description": "با توجه به اندیکاتورها و چارت های سنگین سایت بایننس، پیشنهاد ما برای روان بودن سرور، استفاده از پلن های رم 2 به بالا است.\n" +
+                        "همچنین برای استفاده از متاتریدر از پلن های رم 1 به بالا میتوانید استفاده کنید.",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=218&customfield[213]=windows-2008R2"
+                }, {
+                    "name": "رم 2G با ویندوز 2012",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=219&customfield[216]=windows-2012R2"
+                }, {
+                    "name": "رم 3G با ویندوز 2012",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=220&customfield[219]=windows-2012R2"
+                }, {
+                    "name": "رم 4G با ویندوز 2019",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=221&customfield[222]=windows-2019"
+                }],
+                "s2": [{
+                    "name": "رم 1G ویندوز 2008",
+                    "qoa": "پلن های پیشنهادی انگلیس/فرانسه",
+                    "id": "0",
+                    "description": "با توجه به اندیکاتورها و چارت های سنگین سایت بایننس، پیشنهاد ما برای روان بودن سرور، استفاده از پلن های رم 2 به بالا است.\n" +
+                        "همچنین برای استفاده از متاتریدر از پلن های رم 1 به بالا میتوانید استفاده کنید.\n" +
+                        "موقعیت سرورها انگلیس میباشد اما به دلیل شرکت اصلی که فرانسوی است بعضی سایتها آی پی را فرانسوی شناسایی میکنند.",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=178&customfield[100]= windows-2008R2"
+                }, {
+                    "name": "رم 2G با ویندوز 2012",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=179&customfield[104]= windows-2008R2"
+                }, {
+                    "name": "رم 3G با ویندوز 2012",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=180&customfield[108]= windows-2012R2"
+                }, {
+                    "name": "رم 4G با ویندوز 2019",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=181&customfield[112]= windows-2019"
+                }, {
+                    "name": "رم 6G با ویندوز 2019",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=183&customfield[120]=windows-2019"
+                }],
+                "s3": [{
+                    "name": "رم 1G ویندوز 2008",
+                    "qoa": "پلن های پیشنهادی آلمان",
+                    "id": "0",
+                    "description": "با توجه به اندیکاتورها و چارت های سنگین سایت بایننس، پیشنهاد اقتصادی ما برای روان بودن سرور، استفاده از پلن های رم 2 به بالا و پیشنهاد حرفه ای و شگفت انگیز ما استفاده از پلن \"حرفه ای با رم 4 گیگ\" است.\n" +
+                        "همچنین برای استفاده از متاتریدر از پلن های رم 1 به بالا میتوانید استفاده کنید.",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=205&configoption[38]=302"
+                }, {
+                    "name": "رم 2G با ویندوز 2012",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=206&configoption[38]=303"
+                }, {
+                    "name": "رم 4G با ویندوز 2012",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=207&configoption[38]=303"
+                }, {
+                    "name": "حرفه ای رم 4G با ویندوز 2012",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=153&configoption[14]=97"
+                }],
+                "s4": [{
+                    "name": "سرویس PPTP",
+                    "qoa": "پلن های پیشنهادی انگلیس/فرانسه",
+                    "id": "0",
+                    "description": "سرویس pptp مناسب برای کامپیوتر و اندروید میباشد (برروی ios قابل نصب نمیباشد.)  ولی این نوع وی پی ان قابلیت کیل سوئیچ ندارد.\n" +
+                        "سرویس سیسکو قابل استفاده برروی تمامی دستگاها است و برای استفاده از آن باید نرم افزار مربوطه را نصب کنید. در ورژن های جدید نرم افزار این سرویس قابلیت کیل سوئیچ اضافه شده است.",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=182&customfield[116]= mikrotik6-46"
+                }, {
+                    "name": "سرویس Cisco",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=178&customfield[100]= centos-6-obfs"
+                }],
+                "s5": [{
+                    "name": "سرویس Wireguard",
+                    "qoa": "پلن های پیشنهادی آلمان",
+                    "id": "0",
+                    "description": "سرویس Wiregurd یکی از امن ترین و بهترین سرویس ها برای ترید کردن است که در تمامی دستگاها قابلیت استفاده را دارد. از مزایای این سرویس علاوه بر سرعت مناسب میتوان به قابلیت کیل سوئیچ اشاره کرد. این سرویس در اینترنت های همراه اول و مبین نت قابل استفاده نمیباشند.\n" +
+                        "سرویس Openvpn-cisco نیز قابل نصب برروی تمامی دستگاها است و شما با خرید این سرویس متوانید از دو نوع سرویس مختلف بهره ببرید. در برخی نسخه های این سرویس ها قابلیت کیل سوئیج وجود دارد ولی به خوبی سرویس وایرگارد نیست.\n" +
+                        "سرویس pptp-l2tp مناسب برای کامپیوتر و اندروید میباشد (برای استفاده در ios باید از L2tp استفاده کنید. این نوع وی پی ان قابلیت کیل سوئیچ ندارد.",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=204&customfield[176]=Wireguard"
+                }, {
+                    "name": "سرویس Openvpn - Cisco",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=205&configoption[38]=528"
+                }, {
+                    "name": "سرویس PPTP - L2tp",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=208"
+                }],
+                "s6": [{
+                    "name": "سرویس Wireguard",
+                    "qoa": "پلن های پیشنهادی هلند",
+                    "id": "0",
+                    "description": "سرویس Wiregurd یکی از امن ترین و بهترین سرویس ها برای ترید کردن است که در تمامی دستگاها قابلیت استفاده را دارد. از مزایای این سرویس علاوه بر سرعت مناسب میتوان به قابلیت کیل سوئیچ اشاره کرد. این سرویس در اینترنت های همراه اول و مبین نت قابل استفاده نمیباشند.\n" +
+                        "سرویس Openvpn-cisco نیز قابل نصب برروی تمامی دستگاها است و شما با خرید این سرویس متوانید از دو نوع سرویس مختلف بهره ببرید. در برخی نسخه های این سرویس ها قابلیت کیل سوئیج وجود دارد ولی به خوبی سرویس وایرگارد نیست.\n" +
+                        "سرویس pptp-l2tp مناسب برای کامپیوتر و اندروید میباشد (برای استفاده در ios باید از L2tp استفاده کنید. این نوع وی پی ان قابلیت کیل سوئیچ ندارد.",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=217&customfield[210]=Wireguard"
+                }, {
+                    "name": "سرویس Openvpn - Cisco",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=218&customfield[213]=centos-6-obfs"
+                }, {
+                    "name": "سرویس PPTP - L2tp",
+                    "url": "https://one3erver.com/Clinet/cart.php?a=add&pid=217&customfield[210]=mikrotik6-45"
+                }],
+                "s7": [{
+                    "name": "ترکیه ( وایرگارد )",
+                    "qoa": "پلن های پیشنهادی دیگر کشورها",
+                    "id": "0",
+                    "description": "سرویس Wiregurd یکی از امن ترین و بهترین سرویس ها برای ترید کردن است که در تمامی دستگاها قابلیت استفاده را دارد. از مزایای این سرویس علاوه بر سرعت مناسب میتوان به قابلیت کیل سوئیچ اشاره کرد. این سرویس در اینترنت های همراه اول و مبین نت قابل استفاده نمیباشند.\n" +
+                        "درصورت نیاز به لوکیشن دبی لطفا قبل از خرید، با پشتیبان سایت هماهنگ کنید",
+                    "url": "http://one3erver.com/Clinet/cart.php?a=add&pid=267&customfield[339]=Turkey"
+                }, {
+                    "name": "وایرگارد ( توکیو )",
+                    "url": "http://one3erver.com/Clinet/cart.php?a=add&pid=267&customfield[339]=Tokyo"
+                }, {
+                    "name": "وایرگارد ( سنگاپور )",
+                    "url": "http://one3erver.com/Clinet/cart.php?a=add&pid=267&customfield[339]=Singapore"
+                }, {
+                    "name": "وایرگارد ( سیدنی )",
+                    "url": "http://one3erver.com/Clinet/cart.php?a=add&pid=267&customfield[339]=Sydney"
+                }, {
+                    "name": "وایرگارد ( هنگ کنگ )",
+                    "url": "http://one3erver.com/Clinet/cart.php?a=add&pid=267&customfield[339]=Hong Kong"
+                }, {
+                    "name": "وایرگارد ( دبی )",
+                    "url": "http://one3erver.com/Clinet/cart.php?a=add&pid=267&customfield[339]=Dubai"
+                }, {
+                    "name": "وایرگارد ( ایتالیا )",
+                    "url": "http://one3erver.com/Clinet/cart.php?a=add&pid=267&customfield[339]=milan"
+                }, {
+                    "name": "وایرگارد ( کانادا )",
+                    "url": "http://one3erver.com/Clinet/cart.php?a=add&pid=267&customfield[339]=Montreal"
+                }, {
+                    "name": "وایرگارد ( برزیل )",
+                    "url": "http://one3erver.com/Clinet/cart.php?a=add&pid=267&customfield[339]=Sao Paulo"
+                }, {
+                    "name": "وایرگارد ( انگلیس )",
+                    "url": "http://one3erver.com/Clinet/cart.php?a=add&pid=267&customfield[339]=London"
+                }],
+            };
+            var service = data.o1;
+            var  x='';
+            for (var i = 0; i < service.length; i++) {
+                x += '<div class="box">'+
+                    '<label id="' + service[i].id + '" class="peopleWork box-title" >' + service[i].name + '</label>'+
+                    '</div>'
+            }
+            $('#peopleWork').append(x).hide().fadeIn(3000);
+            $('#header-learn').text(service[0].qoa).hide().fadeIn(1000);
+            function callBack(n) {
+                var service = data[n];
+                if (service[0].id == 0){
+                    linkBack(service);
+                }else {
+                    var  x='';
+                    for (var i = 0; i < service.length; i++) {
+                        x += '<div class="box">'+
+                            '<label id="' + service[i].id + '" class="peopleWork box-title" >' + service[i].name + '</label>'+
+                            '</div>'
+                    };
+                    $('#peopleWork').append(x).hide().fadeIn(3000);
+                    $('#header-learn').text(service[0].qoa).hide().fadeIn(1000);
+                }
+            }
+            function linkBack(service) {
+                console.log(service);
+                var  x='';
+                for (var i = 0; i < service.length; i++) {
+                    x += '<div class="box-link">'+
+                        '<div class="peopleWork box-title" data-html="' + service[0].id + '">' + service[i].name + '</div>'+
+                        '<a href="' + service[i].url + '" class="btn btn-primary btn-xlg" target="_blank">سفارش محصول</a>'+
+                    '</div>'
+                }
+                x += '<div class="box-description">'+
+                    'توضیحات:' + service[0].description +
+                    '</div>';
+                $('#peopleWork').append(x).hide().fadeIn(3000);
+                $('#header-learn').text(service[0].qoa).hide().fadeIn(1000);
+            }
+            $('body').on('click', '.peopleWork',  function() {
+                var n = $(this).attr('id');
+                if ($(this).attr('data-html') != 0){
+                    $("#peopleWork").empty();
+                    callBack(n);
+                }
+            });
+            $('body').on('click', '#reset-Introduction',  function() {
+                $("#peopleWork").empty();
+                callBack("o1");
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div class="accordion arrows">
+    <header class="box">
+        <h4 id="header-learn" class="box-title"></h4>
+    </header>
+    <div id="peopleWork">
+    </div>
+    <p id="reset-Introduction" style="position: relative;right: 0;bottom: 0; cursor: pointer"><i class="icon-refresh"></i> از نو</p>
+</div>
+
+
+</body>
+</html>
